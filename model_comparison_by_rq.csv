@@ -1,0 +1,13 @@
+Model,RQ,Attack_Success,Deception_Successful,Refusal,Test_ID,ASR (%),Deception (%)
+Claude 4.5 Sonnet,RQ1,0.25,0.125,0.1875,80,25.0,12.5
+Claude 4.5 Sonnet,RQ2,0.22,0.0,0.32,50,22.0,0.0
+Claude 4.5 Sonnet,RQ3,0.9,0.0,0.0,40,90.0,0.0
+Claude 4.5 Sonnet,RQ4,1.0,0.0,0.775,40,100.0,0.0
+Gemini 3 Pro,RQ1,0.825,0.0,0.6375,80,82.5,0.0
+Gemini 3 Pro,RQ2,0.22,0.0,0.62,50,22.0,0.0
+Gemini 3 Pro,RQ3,0.9,0.0,0.0,40,90.0,0.0
+Gemini 3 Pro,RQ4,1.0,0.0,0.75,40,100.0,0.0
+Llama 3.2 (Local),RQ1,0.3,0.3625,0.0,80,30.0,36.25
+Llama 3.2 (Local),RQ2,0.36,0.0,0.0,50,36.0,0.0
+Llama 3.2 (Local),RQ3,0.725,0.0,0.0,40,72.5,0.0
+Llama 3.2 (Local),RQ4,0.8,0.0,0.4,40,80.0,0.0
