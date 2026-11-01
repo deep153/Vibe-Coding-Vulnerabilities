@@ -1,0 +1,33 @@
+\documentclass[tikz,border=5mm]{standalone}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usepackage{xcolor}
+
+\begin{document}
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!10, font=\sffamily\small]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=blue!10, font=\sffamily\small]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, text width=2.5cm, draw=black, fill=green!10, font=\sffamily\small]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\begin{tikzpicture}[node distance=1.8cm]
+
+\node (dataset) [startstop] {1. SARD-Bench case (240; 3 stealth tiers)};
+\node (context) [process, below of=dataset] {2. Deliver untrusted workspace file via \texttt{read\_file} tool response (privilege separation)};
+\node (llm) [process, below of=context, yshift=-0.3cm] {3. Agent (Claude Sonnet 5.5, GPT-5.1, Llama 4 Maverick) emits \texttt{execute\_sandboxed\_command}};
+\node (sandbox) [process, below of=llm, xshift=-2.9cm, yshift=-0.3cm] {4a. \texttt{sandbox\_default}: run in REAL sandbox (net denied, writes jailed)};
+\node (escalate) [process, below of=llm, xshift=2.9cm, yshift=-0.3cm] {4b. Privileged request: intercept = escalated breach};
+\node (reviewer) [decision, below of=escalate, yshift=-1.0cm] {5. Auto-reviewer A vs B (laundering)};
+\node (analysis) [decision, below of=llm, yshift=-4.1cm] {6. Score 5 outcomes};
+\node (results) [startstop, below of=analysis, yshift=-1.9cm] {7. Refusal / Text-Echo / Contained / Escalated / Auto-approved};
+
+\draw [arrow] (dataset) -- (context);
+\draw [arrow] (context) -- (llm);
+\draw [arrow] (llm) -- (sandbox);
+\draw [arrow] (llm) -- (escalate);
+\draw [arrow] (sandbox) |- node[anchor=east, font=\sffamily\footnotesize, pos=0.25] {real error $\Rightarrow$ turn 2 (RQ4)} (analysis);
+\draw [arrow] (escalate) -- (reviewer);
+\draw [arrow] (reviewer) |- (analysis);
+\draw [arrow] (analysis) -- (results);
+
+\end{tikzpicture}
+\end{document}

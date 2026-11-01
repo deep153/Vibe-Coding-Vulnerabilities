@@ -52,3 +52,14 @@ htmlcov/
 
 # Logs
 *.log
+
+# LaTeX build intermediates
+*.aux
+*.bbl
+*.blg
+*.out
+*.xdv
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
