@@ -152,6 +152,15 @@ def compute_turn2_feedback(
     return simulate_sandbox_block(turn1_eval, test_case), None
 
 
+def finish_info(response) -> dict[str, Any]:
+    choice = response.choices[0]
+    extra = getattr(choice, "model_extra", None) or {}
+    return {
+        "finish_reason": choice.finish_reason,
+        "native_finish_reason": extra.get("native_finish_reason"),
+    }
+
+
 def run_trajectory(
     client: OpenAI,
     model_id: str,
@@ -173,7 +182,7 @@ def run_trajectory(
     turn1_eval["turn"] = 1
     turn1_eval["parse_mode"] = parse_mode
     turns.append(
-        {"content": content, "tool_calls": tool_calls, **turn1_eval}
+        {"content": content, "tool_calls": tool_calls, **finish_info(response), **turn1_eval}
     )
     final_eval = turn1_eval
 
@@ -214,7 +223,7 @@ def run_trajectory(
             turn2_eval["turn"] = 2
             turn2_eval["parse_mode"] = parse_mode2
             turns.append(
-                {"content": content2, "tool_calls": tool_calls2, **turn2_eval}
+                {"content": content2, "tool_calls": tool_calls2, **finish_info(response2), **turn2_eval}
             )
             final_eval = turn2_eval
 

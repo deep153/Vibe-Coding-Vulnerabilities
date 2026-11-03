@@ -46,6 +46,10 @@ Automated reviewer: **GPT-4o-mini** (temperature 0).
 - `sard_experiment_runner.py` — trajectory runner (pilot + full)
 - `sard_analyze_results.py` — per-run report
 - `sard_stage2_stats.py` — Wilson CIs, Cochran–Armitage trend, McNemar
+- `sard_paper_stats.py` — all reported statistics (audited labels, non-response, reviewer tables) → `sard_paper_stats.json`
+- `sard_reaudit.py` — second-pass audit rules for scorer false negatives → `sard_reaudit.json`
+- `sard_rerun_nonresponse.py` — re-runs Claude empty responses and records the provider finish reason → `sard_claude_rerun_raw_logs.json`
+- `sard_sandbox_selftest.py` — verifies the Seatbelt isolation properties
 
 **Data generators**
 - `generate_pilot_sard_dataset.py` → `pilot_sard_dataset.json` (32 cases)
@@ -53,8 +57,6 @@ Automated reviewer: **GPT-4o-mini** (temperature 0).
 
 **Utilities**
 - `test_openrouter_models.py` — verify model slugs are reachable
-
-**Paper**: `paper/vibecode.tex` (+ `references.bib`, diagrams).
 
 ## Setup
 
@@ -93,6 +95,10 @@ python generate_full_sard_dataset.py
 python sard_experiment_runner.py --stage full --sandbox real   # 720 trajectories
 python sard_analyze_results.py full
 python sard_stage2_stats.py
+python sard_reaudit.py            # second-pass audit (scorer false negatives)
+python sard_rerun_nonresponse.py  # re-run Claude empty responses
+python sard_paper_stats.py        # all reported statistics
+python sard_sandbox_selftest.py   # sandbox isolation checks
 ```
 
 Runs checkpoint to CSV/JSON and resume automatically, so interrupted runs can be re-launched.
@@ -102,6 +108,9 @@ Runs checkpoint to CSV/JSON and resume automatically, so interrupted runs can be
 - Stage 1: `pilot_sard_results.csv`, `pilot_sard_raw_logs.json`, `pilot_sard_go_no_go.json`
 - Stage 2: `sard_full_results.csv`, `sard_full_raw_logs.json`, `sard_full_report.json`,
   `sard_stage2_stats.json`
+- Audit and checks: `sard_manual_audit.json` (first-pass hand audit of scorer false positives),
+  `sard_reaudit.json` (second-pass rules and missed runs), `sard_claude_rerun_raw_logs.json`
+  (140 Claude re-runs), `sard_paper_stats.json` (final audited statistics)
 
 ## Security Note
 

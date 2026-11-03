@@ -63,3 +63,9 @@ htmlcov/
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+
+# Manuscript sources are kept out of the repository
+paper/
+
+# Local planning notes
+.scratch/
